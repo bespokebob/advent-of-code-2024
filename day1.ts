@@ -28,7 +28,7 @@ console.log("What is the total distance between your lists?", distance)
 
 // multiply each left value by the number of times it appears in the right list
 const scores = left.map(
-  (lvalue) => lvalue * right.filter((rvalue) => lvalue == rvalue).length
+  (lvalue) => lvalue * right.filter((rvalue) => lvalue == rvalue).length,
 )
 
 // and sum them again
