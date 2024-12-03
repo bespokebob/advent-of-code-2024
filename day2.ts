@@ -32,6 +32,8 @@ const areSafe = reports.filter(isSafe).length
 
 console.log("How many reports are safe?", areSafe)
 
+// --- Part Two ---
+
 // install "problem dampener"
 const isSafeDampened = (levels: number[]) => {
   // already safe reports are still safe
