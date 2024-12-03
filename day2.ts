@@ -6,6 +6,7 @@
 const input = await Deno.readTextFile("day2_input.test.txt")
 //const input = await Deno.readTextFile("day2_input.txt")
 
+// split input into an array (of reports) of arrays (of "levels")
 const reports = input.split(/\r\n|\n/).map((line) =>
   line.split(/\s+/).map(Number)
 )
@@ -38,7 +39,7 @@ console.log("How many reports are safe?", areSafe)
 const isSafeDampened = (levels: number[]) => {
   // already safe reports are still safe
   if (isSafe(levels)) return true
-  // check if any single level can be removed to be safe
+  // check if any single level can be removed to make the report safe
   for (let i = 0; i < levels.length; i++) {
     const newLevels = [...levels]
     newLevels.splice(i, 1)

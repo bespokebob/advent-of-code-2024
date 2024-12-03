@@ -3,8 +3,8 @@
 // https://adventofcode.com/2024/day/3
 
 // read input
-//const input = await Deno.readTextFile("day3_input.test2.txt")
-const input = await Deno.readTextFile("day3_input.txt")
+const input = await Deno.readTextFile("day3_input.test2.txt")
+//const input = await Deno.readTextFile("day3_input.txt")
 
 // find all valid instructions
 const instructions = input.match(/mul\(\d{1,3},\d{1,3}\)/g)
