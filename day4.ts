@@ -3,8 +3,8 @@
 // https://adventofcode.com/2024/day/4
 
 // read input
-//const input = await Deno.readTextFile("day4_input.test.txt")
-const input = await Deno.readTextFile("day4_input.txt")
+const input = await Deno.readTextFile("day4_input.test.txt")
+//const input = await Deno.readTextFile("day4_input.txt")
 
 // convert to a grid of characters
 const search = input.split(/\r\n|\n/).map((line) => line.split(""))
