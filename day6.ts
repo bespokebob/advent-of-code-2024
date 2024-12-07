@@ -3,8 +3,8 @@
 // https://adventofcode.com/2024/day/6
 
 // read input
-const input = await Deno.readTextFile("day6_input.test.txt")
-//const input = await Deno.readTextFile("day6_input.txt")
+const test = Deno.args[0] === "test"
+const input = await Deno.readTextFile(`day6_input.${test ? "test." : ""}txt`)
 
 // we only care about the locations of the obstructions and the guard
 

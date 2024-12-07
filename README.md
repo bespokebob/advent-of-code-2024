@@ -11,8 +11,8 @@ each step in the solution, which should help if you're stuck.
 
 - [Install Deno](https://docs.deno.com/runtime/getting_started/installation/)
 - Run scripts with `deno run --allow-read` (or just execute them directly)
-- Scripts run with test input; edit the file to replace the `input.test.txt`
-  with the path to your own input if you want to get your own answers.
+- Run with a `test` argument to use test input (included), or without arguments
+  to use your own `input.txt` file (not included).
 
 ## Contributing
 

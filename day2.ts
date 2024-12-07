@@ -3,8 +3,8 @@
 // https://adventofcode.com/2024/day/2
 
 // read input
-const input = await Deno.readTextFile("day2_input.test.txt")
-//const input = await Deno.readTextFile("day2_input.txt")
+const test = Deno.args[0] === "test"
+const input = await Deno.readTextFile(`day2_input.${test ? "test." : ""}txt`)
 
 // split input into an array (of reports) of arrays (of "levels")
 const reports = input.split(/\r\n|\n/).map((line) =>

@@ -3,8 +3,8 @@
 // https://adventofcode.com/2024/day/5
 
 // read input
-const input = await Deno.readTextFile("day5_input.test.txt")
-//const input = await Deno.readTextFile("day5_input.txt")
+const test = Deno.args[0] === "test"
+const input = await Deno.readTextFile(`day5_input.${test ? "test." : ""}txt`)
 
 // split input into rule and update sections by the blank line separating them
 const [ruleInput, updateInput] = input.split(/^$/m)

@@ -3,8 +3,8 @@
 // https://adventofcode.com/2024/day/1
 
 // read input
-const input = await Deno.readTextFile("day1_input.test.txt")
-//const input = await Deno.readTextFile("day1_input.txt")
+const test = Deno.args[0] === "test"
+const input = await Deno.readTextFile(`day1_input.${test ? "test." : ""}txt`)
 
 // split into "left" and "right" lists, and parse as numbers
 const lists = input.split("\n").map((line) => line.split(/\s+/))
