@@ -60,38 +60,44 @@ const turn = (direction: Directions) => {
   }
 }
 
-// build an array to store visited locations
-const visited: boolean[][] = Array.from(lines).map((line) =>
-  new Array(line.length).fill(false)
-)
+function walkPath() {
+  // build an array to store visited locations
+  const visited: boolean[][] = Array.from(lines).map((line) =>
+    new Array(line.length).fill(false)
+  )
 
-let direction = Directions[guardLoc![0] as "^" | "v" | "<" | ">"]
-let x = guardLoc![1]
-let y = guardLoc![2]
-// use a loop instead of tail-call recursion since apparently that isn't well
-// optimized in V8?
-while (!(y < 0 || y === visited.length || x < 0 || x === visited[y].length)) {
-  // mark our current location as visited
-  visited[y][x] = true
-  // calculate the next move
-  const next = move(direction, x, y)
-  if (obstructions.find((loc) => loc[0] === next[0] && loc[1] === next[1])) {
-    // if we hit an obstruction, turn direction instead
-    direction = turn(direction)
-  } else {
-    // otherwise, move locations
-    ;[x, y] = next
+  let direction = Directions[guardLoc![0] as "^" | "v" | "<" | ">"]
+  let x = guardLoc![1]
+  let y = guardLoc![2]
+
+  // use a loop instead of tail-call recursion since apparently that isn't well
+  // optimized in V8?
+  while (!(y < 0 || y === visited.length || x < 0 || x === visited[y].length)) {
+    // mark our current location as visited
+    visited[y][x] = true
+    // calculate the next move
+    const next = move(direction, x, y)
+    if (obstructions.find((loc) => loc[0] === next[0] && loc[1] === next[1])) {
+      // if we hit an obstruction, turn direction instead
+      direction = turn(direction)
+    } else {
+      // otherwise, move locations
+      ;[x, y] = next
+    }
   }
+
+  // prints the same "X for visited" version of the input/map as the examples
+  // lines.forEach((line, y) =>
+  //   console.log(
+  //     line.split("").map((char, x) => visited[y][x] ? "X" : char).join(""),
+  //   )
+  // )
+
+  return visited
 }
 
+const visited = walkPath()
 const visitedLocations = visited.flat().filter((i) => i).length
-
-// prints the same "X for visited" version of the input/map as the examples
-// lines.forEach((line, y) =>
-//   console.log(
-//     line.split("").map((char, x) => visited[y][x] ? "X" : char).join(""),
-//   )
-// )
 
 console.log(
   "How many distinct positions will the guard visit before leaving the mapped area?",
@@ -100,4 +106,51 @@ console.log(
 
 // --- Part Two ---
 
-// TODO
+// similar to the previous path walking, except now we abort if a loop is detected
+function detectLoop(obstruction: [number, number]) {
+  // build an array to store visited locations as an array of previous directions
+  const visited: Directions[][][] = Array.from(lines).map((line) =>
+    [...Array(line.length)].map((_) => [])
+  )
+
+  let direction = Directions[guardLoc![0] as "^" | "v" | "<" | ">"]
+  let x = guardLoc![1]
+  let y = guardLoc![2]
+
+  while (!(y < 0 || y === visited.length || x < 0 || x === visited[y].length)) {
+    if (visited[y][x].find((v) => v === direction)) {
+      // we already visited this location going in the same direction,
+      // which implies that we are in a loop
+      return true
+    }
+    // mark our current location as visited using the current direction
+    visited[y][x].push(direction)
+    // calculate the next move
+    const next = move(direction, x, y)
+    if (
+      obstructions.concat([obstruction]).find((loc) =>
+        loc[0] === next[0] && loc[1] === next[1]
+      )
+    ) {
+      // if we hit an obstruction, turn direction instead
+      direction = turn(direction)
+    } else {
+      // otherwise, move locations
+      ;[x, y] = next
+    }
+  }
+
+  // exiting the map, no loop
+  return false
+}
+
+// why yes, this does take a while, thanks for asking
+const loops: boolean[][] = Array.from(lines).map((line, y) =>
+  [...Array(line.length)].map((_, x) => detectLoop([x, y]))
+)
+const loopLocations = loops.flat().filter((i) => i).length
+
+console.log(
+  "How many different positions could you choose for this obstruction?",
+  loopLocations,
+)
