@@ -8,7 +8,7 @@ const input = await Deno.readTextFile(`day6_input.${test ? "test." : ""}txt`)
 
 // we only care about the locations of the obstructions and the guard
 
-// convert the map into paris of characters with their coordinates
+// convert the map into pairs of characters with their coordinates
 const lines = input.split(/\r\n|\n/)
 const mapLocations = lines.flatMap((line, y) =>
   line.split("").map((char, x) => [char, x, y] as const)
